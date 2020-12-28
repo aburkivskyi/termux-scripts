@@ -51,7 +51,7 @@ sleepANDclear() {
 
 setupProperties() {
   if [ -d "$HOME/.termux" ]; then
-    mv "$HOME/.termux" "$HOME/.termux.bak"
+    mv $HOME/.termux $HOME/.termux.bak
   fi
 
   curl -fsLo "${HOME}/.termux/colors.properties" --create-dirs "${colors_prop_url}"
@@ -82,9 +82,9 @@ main() {
   installPackages
   termux-setup-storage
   sleepANDclear 3
-  setupProperties
   [[ $USHELL != "zsh" ]] && \
       setupZshell
+  setupProperties
 
   exit 0
 }
