@@ -19,23 +19,15 @@ USHELL="$( basename "${SHELL}" )"
 omz_url='https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh'
 colors_prop_url='https://cdn.jsdelivr.net/gh/4679/oh-my-termux@master/.termux/colors.properties'
 fonts_url='https://cdn.jsdelivr.net/gh/4679/oh-my-termux@master/.termux/font.ttf'
-pkgs=(
-  'curl'
-  'libcurl'
-  'git'
-  'zsh'
-  'termux-exec'
-)
+installPackages() {
+  pkg install -y curl libcurl git zsh termux-exec
+}
 
 checkRoot() {     ## ANTI-ROOT
   if [ "$EUID" -eq 0 ]; then
 	  echo -e "\nError: utility $PROGRAM_NAME should not be used as root."
 	  exit 201
   fi
-}
-
-installPackages() {
-  IFS=' ' pkg install -y "${pkgs}"
 }
 
 sleepANDclear() {
@@ -51,7 +43,7 @@ sleepANDclear() {
 
 setupProperties() {
   if [ -d "$HOME/.termux" ]; then
-    mv $HOME/.termux $HOME/.termux.bak
+    mv $HOME/.termux $HOME/.termux.$(date -R).bak
   fi
 
   curl -fsLo "${HOME}/.termux/colors.properties" --create-dirs "${colors_prop_url}"
