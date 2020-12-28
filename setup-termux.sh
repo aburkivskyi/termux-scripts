@@ -34,6 +34,11 @@ checkRoot() {     ## ANTI-ROOT
   fi
 }
 
+installPackages() {
+  pkg install -y "$pkgs[*]"
+
+}
+
 sleepANDclear() {
   local t
   t="${1:-1}"
@@ -41,7 +46,7 @@ sleepANDclear() {
     echo -e "Error: \"$t\" - not a digit."
     exit 202
   fi
-  
+
   sleep "${t}s" && clear
 }
 
@@ -49,10 +54,10 @@ setupProperties() {
   if [ -d "$HOME/.termux" ]; then
     mv "$HOME/.termux" "$HOME/.termux.bak"
   fi
-  
+
   curl -fsLo "${HOME}/.termux/colors.properties" --create-dirs "${colors_prop_url}"
   curl -fsLo "${HOME}/.termux/font.ttf" --create-dirs "${fonts_url}"
-  
+
   cat <<'EOF' >"$PROPS"
 use-black-ui = true
 EOF
@@ -75,12 +80,13 @@ main() {
   checkRoot
   pkg update
   pkg upgrade -y
+  installPackages
   termux-setup-storage
   sleepANDclear 3
   setupProperties
   [[ $USHELL != "zsh" ]] && \
       setupZshell
-  
+
   exit 0
 }
 
