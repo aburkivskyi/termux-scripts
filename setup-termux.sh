@@ -35,8 +35,7 @@ checkRoot() {     ## ANTI-ROOT
 }
 
 installPackages() {
-  pkg install -y "$pkgs[*]"
-
+  pkg install -y "${pkgs}"
 }
 
 sleepANDclear() {
