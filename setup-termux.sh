@@ -35,7 +35,7 @@ checkRoot() {     ## ANTI-ROOT
 }
 
 installPackages() {
-  pkg install -y "${pkgs}"
+  IFS=' ' pkg install -y "${pkgs}"
 }
 
 sleepANDclear() {
